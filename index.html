@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Raleway:wght@300;400&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #050914; /* Deep night sky color */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Raleway', sans-serif;
+            color: #e0e6ed;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Twinkling Stars Background */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: twinkle 5s infinite alternate;
+            opacity: 0.5;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        /* Phase 1: Tapping Messages */
+        #phase-1 {
+            z-index: 2;
+            text-align: center;
+            width: 80%;
+            cursor: pointer;
+            position: absolute;
+            transition: opacity 1.5s ease;
+        }
+
+        .message-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+            text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .message-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #tap-indicator {
+            position: absolute;
+            bottom: 40px;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: pulseFade 3s infinite;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        @keyframes pulseFade {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.6; }
+        }
+
+        /* The Button that connects Phase 1 and Phase 2 */
+        #transition-btn {
+            display: none;
+            opacity: 0;
+            margin-top: 30px;
+            padding: 12px 24px;
+            background: transparent;
+            color: #e0e6ed;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 25px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            z-index: 3;
+        }
+
+        #transition-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #ffffff;
+        }
+
+        /* Phase 2: The Letter */
+        #phase-2 {
+            z-index: 3;
+            width: 85%;
+            max-width: 500px;
+            max-height: 75vh; 
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            opacity: 0;
+            display: none;
+            transform: translateY(20px);
+            transition: opacity 2s ease, transform 2s ease;
+        }
+
+        #phase-2.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .letter-content {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #d1d8e0;
+            text-align: left;
+        }
+
+        .letter-content p {
+            margin-bottom: 20px;
+        }
+
+        #phase-2::-webkit-scrollbar {
+            width: 4px;
+        }
+        #phase-2::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="stars"></div>
+
+    <div id="phase-1">
+        <div id="text-display" class="message-text"></div>
+        <button id="transition-btn">Read a letter from me</button>
+    </div>
+    <div id="tap-indicator">(tap anywhere to continue)</div>
+
+    <div id="phase-2">
+        <div class="letter-content">
+            <p>Hello Madam...</p>
+
+            <p>I realize now that I messed up by not trying harder to truly understand how you were feeling. I know you have always believed it is better and safer to handle everything on your own. But the truth is, no one should have to carry the weight of the world by themselves, and I want to be someone who can help you carry it.</p>
+
+            <p>I understand that the word "relationship" started to feel like a burden to you, a heavy pressure that only made things harder. So, I am asking for a chance at a completely new start. We don't need to put any labels on this right now. Please, just let me be with you as someone who loves you. You have asked me many times why I am unable to move on or forget about you. It is simply because I have never felt like this before in my life, and I know with absolute certainty that I will never feel this way again. My entire heart belongs to you.</p>
+
+            <p>I am just asking you to keep me in a place in your life where you can slowly see if my presence brings you peace instead of pressure. Let's leave the past behind us. You don't need to give me an answer today. There are no timelines and no expectations—just a gentle request to think it over one more time, knowing that there is a person here who is patiently waiting for you.</p>
+
+            <p>I have made a decision to walk beside you for the rest of my life, even if the path is difficult and burns my feet. My only request is that you let me love you from whatever distance makes you feel completely safe. I could never forget you, and I could never forget your voice, and the eyes I Love.</p>
+
+            <p>Always yours,</p>
+            <p>[Your Name]</p>
+        </div>
+    </div>
+
+    <script>
+        const messages = [
+            "Hey...",
+            "I was just thinking about things,",
+            "and I wanted to make something for you.",
+            "I know you feel safest when you handle things on your own...",
+            "and I'm not asking you to change that.",
+            "I just want to promise you something.",
+            "You never have to be perfect around me.",
+            "I'm not here to pressure you into anything,",
+            "and you don't ever have to push me away to protect me.",
+            "I will always be the one who sits with you, listens, and just stays.",
+            "I choose to walk beside you, at your exact pace.",
+            "On the good days, the quiet days, and everything in between.",
+            "No expectations. Just me and you.",
+            "I'm really happy to be the person you trust.",
+            "Always."
+        ];
+
+        let currentIndex = 0;
+        const phase1 = document.getElementById('phase-1');
+        const phase2 = document.getElementById('phase-2');
+        const textDisplay = document.getElementById('text-display');
+        const tapIndicator = document.getElementById('tap-indicator');
+        const transitionBtn = document.getElementById('transition-btn');
+        let canTap = true;
+
+        function showNextMessage() {
+            if (!canTap) return;
+
+            if (currentIndex < messages.length) {
+                canTap = false; 
+                textDisplay.classList.remove('visible');
+                
+                setTimeout(() => {
+                    textDisplay.innerText = messages[currentIndex];
+                    textDisplay.classList.add('visible');
+                    currentIndex++;
+                    canTap = true;
+                    
+                    if (currentIndex === 1) {
+                        setTimeout(() => { tapIndicator.style.opacity = '1'; }, 2000);
+                    } else if (currentIndex === messages.length) {
+                        tapIndicator.style.display = 'none'; 
+                        
+                        setTimeout(() => {
+                            transitionBtn.style.display = 'inline-block';
+                            setTimeout(() => { transitionBtn.style.opacity = '1'; }, 50);
+                        }, 1500);
+                    }
+                }, 1000); 
+            }
+        }
+
+        setTimeout(showNextMessage, 500);
+
+        document.getElementById('phase-1').addEventListener('click', (e) => {
+            if (e.target !== transitionBtn && currentIndex < messages.length && textDisplay.classList.contains('visible')) {
+                showNextMessage();
+            }
+        });
+
+        transitionBtn.addEventListener('click', () => {
+            phase1.style.opacity = '0';
+            
+            setTimeout(() => {
+                phase1.style.display = 'none'; 
+                phase2.style.display = 'block';
+                setTimeout(() => {
+                    phase2.classList.add('visible'); 
+                }, 50);
+            }, 1500);
+        });
+    </script>
+
+</body>
+</html>
